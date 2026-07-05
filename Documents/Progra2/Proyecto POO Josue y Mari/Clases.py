@@ -32,42 +32,55 @@ class GestorPartidos:
     def __init__(self,df):
         self.df = df
     def get_partidos(self, indice):
-        return self._df.iloc[indice]
+        return self.df.iloc[indice]
     def get_por_equipo(self,equipo):
 
-        return self._df[
-            (self._df["home_team"]== equipo) |
-            (self._df["away_team"]== equipo)
+        return self.df[
+            (self.df["home_team"]== equipo) |
+            (self.df["away_team"]== equipo)
         ]
     def get_por_año(self,año):
-        return self._df[
-            self._df["year"]== año
+        return self.df[
+            self.df["year"]== año
         ]
     def get_por_sede(self,pais):
-        return self._df[
-            self._df["country"]== pais
+        return self.df[
+            self.df["country"]== pais
         ]
     def ventaja_local(self):
         victorias_local = (
-            self._df["home_score"]>
-            self._df["away_score"]
+            self.df["home_score"]>
+            self.df["away_score"]
         ).sum()
-        return victorias_local / len(self._df)
+        return victorias_local / len(self.df)
     def get_por_ganador(self, equipo):
-        return self._df[
-            self._df["winner"]==equipo
+        return self.df[
+            self.df["winner"]==equipo
         ]
 
     def get_por_ganador(self, equipo):
-        return self._df[
-        self._df["winner"] == equipo]
+        return self.df[
+        self.df["winner"] == equipo]
 
 
-      def top_goleadas(self, n=10):
-         return self._df.sort_values(
+    def top_goleadas(self, n=10):
+         return self.df.sort_values(
            "goal_difference",
         ascending=False
         ).head(n)
+class EDA:
+    def __init__(self, df):
+        self.df = df.copy()
+    def limpieza_datos(self):
+        self.df.drop_duplicates(inplace=True)
+        self.df.dropna(
+            subset=[
+                "date",
+                "home_team",
+                "away_team"],
+            inplace=True)
+        self.df["date"] = pd.to_datetime(self.df["date"])
+        return self.df
 
     def crear_columnas_derivadas(self):
         self.df["year"] = self.df["date"].dt.year
@@ -95,3 +108,18 @@ class GestorPartidos:
 
         return self.df
 
+
+    def detectar_outliers_goles(self):
+
+        q1 = self.df["total_goles"].quantile(0.25)
+        q3 = self.df["total_goles"].quantile(0.75)
+
+        iqr = q3 - q1
+
+        limite_inf = q1 - 1.5 * iqr
+        limite_sup = q3 + 1.5 * iqr
+
+        return self.df[
+            (self.df["total_goles"] < limite_inf) |
+            (self.df["total_goles"] > limite_sup)
+        ]
