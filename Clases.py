@@ -108,6 +108,21 @@ class EDA:
 
         return self.df
 
+    def resumen_descriptivo(self):
+         return self.df.describe(
+                include="all"
+            )
+
+    def matriz_correlacion(self):
+
+        columnas = [
+            "home_score",
+            "away_score",
+            "total_goals",
+            "goal_difference"
+        ]
+
+        return self.df[columnas].corr()
 
     def detectar_outliers_goles(self):
 
