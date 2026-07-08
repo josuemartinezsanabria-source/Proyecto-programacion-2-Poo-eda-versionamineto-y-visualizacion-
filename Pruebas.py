@@ -86,3 +86,21 @@ print(
     ].head()
 )
 
+# =====================================================================
+# EJECUCION DE VISUALIZACIONES
+# =====================================================================
+print("\n--- EJECUTANDO MODULO 5: VISUALIZACION ---")
+
+from Clases import Visualizador
+
+# 1. Instancia del visualizador con los datos procesados
+visualizador_sistema = Visualizador(eda.df)
+
+# 2. Despliegue de los primeros 3 graficos
+visualizador_sistema.graficar_ventaja_local()
+visualizador_sistema.graficar_goles_por_mundial()
+visualizador_sistema.graficar_goles_local_vs_visitante()
+
+# 3. Generacion y despliegue del mapa de calor (Heatmap)
+matriz_datos = eda.matriz_correlacion()
+visualizador_sistema.graficar_matriz_correlacion(matriz_datos)

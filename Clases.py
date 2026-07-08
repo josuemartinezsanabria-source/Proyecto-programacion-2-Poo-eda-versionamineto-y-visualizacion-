@@ -138,3 +138,78 @@ class EDA:
             (self.df["total_goles"] < limite_inf) |
             (self.df["total_goles"] > limite_sup)
         ]
+
+
+# =====================================================================
+# MODULO 5: VISUALIZACION DE DATOS
+# =====================================================================
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+class Visualizador:
+    def __init__(self, df):
+        """
+        Inicializa la clase con el conjunto de datos procesado.
+        """
+        self.df = df
+        sns.set_theme(style="whitegrid")
+
+    def graficar_ventaja_local(self):
+        """
+        1. GRAFICO DE BARRAS: Analizar la distribucion de ganadores.
+        """
+        plt.figure(figsize=(8, 5))
+        paleta = ["#FFAAA6", "#D6A2E8", "#836FA9"]
+
+        sns.countplot(data=self.df, x="winner_type", order=["Local", "Visitante", "Empate"], palette=paleta)
+
+        plt.title("¿Existe la Ventaja Local? (Distribución de Ganadores)", fontsize=13, fontweight='bold',
+                  color="#4A4A4A")
+        plt.xlabel("Tipo de Ganador", fontsize=11)
+        plt.ylabel("Cantidad de Partidos", fontsize=11)
+        plt.tight_layout()
+        plt.show()
+
+    def graficar_goles_por_mundial(self):
+        """
+        2. HISTOGRAMA: Analizar la frecuencia del total de goles anotados.
+        """
+        plt.figure(figsize=(9, 5))
+
+        sns.histplot(data=self.df, x="total_goals", kde=True, color="#9EEAFB", bins=12, edgecolor="#88D4E6")
+
+        plt.title("Distribución de Goles por Partido en la Historia de los Mundiales", fontsize=13, fontweight='bold',
+                  color="#4A4A4A")
+        plt.xlabel("Total de Goles en un Partido", fontsize=11)
+        plt.ylabel("Frecuencia (Cantidad de Partidos)", fontsize=11)
+        plt.tight_layout()
+        plt.show()
+
+    def graficar_goles_local_vs_visitante(self):
+        """
+        3. SCATTER PLOT: Relacion de goles anotados por equipos locales vs visitantes.
+        """
+        plt.figure(figsize=(8, 5))
+
+        sns.scatterplot(data=self.df, x="home_score", y="away_score", alpha=0.6, color="#FFB7B2", s=80)
+
+        plt.title("Relación de Goles: Equipos Locales vs. Visitantes", fontsize=13, fontweight='bold', color="#4A4A4A")
+        plt.xlabel("Goles del Equipo Local", fontsize=11)
+        plt.ylabel("Goles del Equipo Visitante", fontsize=11)
+        plt.tight_layout()
+        plt.show()
+
+    def graficar_matriz_correlacion(self, matriz_corr):
+        """
+        4. HEATMAP: Mapa de calor de las variables numéricas.
+        """
+        plt.figure(figsize=(7, 5))
+        cmap_personalizado = sns.light_palette("#D6A2E8", as_cmap=True)
+
+        sns.heatmap(matriz_corr, annot=True, cmap=cmap_personalizado, fmt=".2f", linewidths=1, linecolor="white")
+
+        plt.title("Heatmap: Matriz de Correlación de Goles del Mundial", fontsize=13, fontweight='bold',
+                  color="#4A4A4A")
+        plt.tight_layout()
+        plt.show()
