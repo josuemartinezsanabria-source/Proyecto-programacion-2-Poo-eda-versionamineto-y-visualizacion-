@@ -103,4 +103,8 @@ visualizador_sistema.graficar_goles_local_vs_visitante()
 
 # 3. Generacion y despliegue del mapa de calor (Heatmap)
 matriz_datos = eda.matriz_correlacion()
+
 visualizador_sistema.graficar_matriz_correlacion(matriz_datos)
+
+visualizador_sistema.graficar_matriz_correlacion(matriz_datos)
+

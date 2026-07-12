@@ -108,11 +108,27 @@ class EDA:
 
         return self.df
 
+
     def matriz_correlacion(self):
         """
         Calcula la matriz de correlación requerida por el script de pruebas.
         """
         columnas = ["home_score", "away_score", "total_goals", "goal_difference"]
+
+    def resumen_descriptivo(self):
+         return self.df.describe(
+                include="all"
+            )
+
+    def matriz_correlacion(self):
+
+        columnas = [
+            "home_score",
+            "away_score",
+            "total_goals",
+            "goal_difference"
+        ]
+
         return self.df[columnas].corr()
 
     def detectar_outliers_goles(self):
@@ -129,6 +145,7 @@ class EDA:
             (self.df["total_goals"] < limite_inf) |
             (self.df["total_goals"] > limite_sup)
         ]
+
 
 # =====================================================================
 # MODULO 5: VISUALIZACION DE DATOS
@@ -152,9 +169,13 @@ class Visualizador:
         plt.figure(figsize=(8, 5))
         paleta = ["#FFAAA6", "#D6A2E8", "#836FA9"]
 
+
         # Se agrega hue y legend=False para evitar la advertencia en consola
         sns.countplot(data=self.df, x="winner_type", order=["Local", "Visitante", "Empate"], palette=paleta,
                       hue="winner_type", legend=False)
+
+        sns.countplot(data=self.df, x="winner_type", order=["Local", "Visitante", "Empate"], palette=paleta)
+
 
         plt.title("¿Existe la Ventaja Local? (Distribución de Ganadores)", fontsize=13, fontweight='bold',
                   color="#4A4A4A")
@@ -180,6 +201,7 @@ class Visualizador:
 
     def graficar_goles_local_vs_visitante(self):
         """
+
         3. SCATTER PLOT: Relación de goles con una línea diagonal limpia de referencia.
         """
         plt.figure(figsize=(8, 6))
@@ -190,19 +212,28 @@ class Visualizador:
 
         # --- LÍNEA DIAGONAL PERFECTA ---
         plt.plot([0, 10], [0, 10], color="#D62728", linestyle="--", linewidth=2.5, label="Línea de Empate")
+        3. SCATTER PLOT: Relacion de goles anotados por equipos locales vs visitantes.
+        """
+        plt.figure(figsize=(8, 5))
+
+        sns.scatterplot(data=self.df, x="home_score", y="away_score", alpha=0.6, color="#FFB7B2", s=80)
+
 
         plt.title("Relación de Goles: Equipos Locales vs. Visitantes", fontsize=13, fontweight='bold', color="#4A4A4A")
         plt.xlabel("Goles del Equipo Local", fontsize=11)
         plt.ylabel("Goles del Equipo Visitante", fontsize=11)
 
+
         plt.xlim(-0.5, 10.5)
         plt.ylim(-0.5, 10.5)
         plt.legend(loc="upper right")
+
         plt.tight_layout()
         plt.show()
 
     def graficar_matriz_correlacion(self, matriz_corr):
         """
+
         4. HEATMAP CORREGIDO: Muestra relaciones legibles con nombres en español y alta claridad.
         """
         plt.figure(figsize=(8, 6))
@@ -226,5 +257,16 @@ class Visualizador:
         )
 
         plt.title("Matriz de Correlación: Interrelación de Variables de Goles", fontsize=13, fontweight='bold', color="#4A4A4A", pad=15)
+
+        4. HEATMAP: Mapa de calor de las variables numéricas.
+        """
+        plt.figure(figsize=(7, 5))
+        cmap_personalizado = sns.light_palette("#D6A2E8", as_cmap=True)
+
+        sns.heatmap(matriz_corr, annot=True, cmap=cmap_personalizado, fmt=".2f", linewidths=1, linecolor="white")
+
+        plt.title("Heatmap: Matriz de Correlación de Goles del Mundial", fontsize=13, fontweight='bold',
+                  color="#4A4A4A")
+
         plt.tight_layout()
         plt.show()
