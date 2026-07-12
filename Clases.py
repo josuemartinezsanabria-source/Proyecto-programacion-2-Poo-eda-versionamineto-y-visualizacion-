@@ -170,7 +170,6 @@ class Visualizador:
         paleta = ["#FFAAA6", "#D6A2E8", "#836FA9"]
 
 
-        # Se agrega hue y legend=False para evitar la advertencia en consola
         sns.countplot(data=self.df, x="winner_type", order=["Local", "Visitante", "Empate"], palette=paleta,
                       hue="winner_type", legend=False)
 
@@ -206,11 +205,11 @@ class Visualizador:
         """
         plt.figure(figsize=(8, 6))
 
-        # Puntos en un azul bonito con bordes negros bien definidos
+       
         sns.scatterplot(data=self.df, x="home_score", y="away_score", alpha=0.6, color="#1F77B4", s=130,
                         edgecolor="black")
 
-        # --- LÍNEA DIAGONAL PERFECTA ---
+     
         plt.plot([0, 10], [0, 10], color="#D62728", linestyle="--", linewidth=2.5, label="Línea de Empate")
         3. SCATTER PLOT: Relacion de goles anotados por equipos locales vs visitantes.
         """
@@ -238,7 +237,7 @@ class Visualizador:
         """
         plt.figure(figsize=(8, 6))
 
-        # Traducimos las etiquetas directamente sobre la matriz recibida
+       
         nombres_espanol = ["Goles Local", "Goles Visitante", "Total Goles", "Diferencia Goles"]
         matriz_relabel = matriz_corr.copy()
         matriz_relabel.index = nombres_espanol
