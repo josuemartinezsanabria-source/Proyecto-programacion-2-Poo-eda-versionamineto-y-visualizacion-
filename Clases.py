@@ -211,8 +211,9 @@ class Visualizador:
 
      
         plt.plot([0, 10], [0, 10], color="#D62728", linestyle="--", linewidth=2.5, label="Línea de Empate")
-        3. SCATTER PLOT: Relacion de goles anotados por equipos locales vs visitantes.
-        """
+        
+        #3. SCATTER PLOT: Relacion de goles anotados por equipos locales vs visitantes.
+        
         plt.figure(figsize=(8, 5))
 
         sns.scatterplot(data=self.df, x="home_score", y="away_score", alpha=0.6, color="#FFB7B2", s=80)
@@ -231,10 +232,10 @@ class Visualizador:
         plt.show()
 
     def graficar_matriz_correlacion(self, matriz_corr):
-        """
+        
 
-        4. HEATMAP CORREGIDO: Muestra relaciones legibles con nombres en español y alta claridad.
-        """
+        #4. HEATMAP CORREGIDO: Muestra relaciones legibles con nombres en español y alta claridad.
+        
         plt.figure(figsize=(8, 6))
 
        
@@ -257,15 +258,4 @@ class Visualizador:
 
         plt.title("Matriz de Correlación: Interrelación de Variables de Goles", fontsize=13, fontweight='bold', color="#4A4A4A", pad=15)
 
-        4. HEATMAP: Mapa de calor de las variables numéricas.
-        """
-        plt.figure(figsize=(7, 5))
-        cmap_personalizado = sns.light_palette("#D6A2E8", as_cmap=True)
-
-        sns.heatmap(matriz_corr, annot=True, cmap=cmap_personalizado, fmt=".2f", linewidths=1, linecolor="white")
-
-        plt.title("Heatmap: Matriz de Correlación de Goles del Mundial", fontsize=13, fontweight='bold',
-                  color="#4A4A4A")
-
-        plt.tight_layout()
-        plt.show()
+    
