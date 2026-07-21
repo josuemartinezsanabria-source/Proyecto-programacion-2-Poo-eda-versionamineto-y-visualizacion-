@@ -106,3 +106,6 @@ st.markdown("---")
 st.subheader("Partidos Registrados")
 st.dataframe(df_f[["date", "home_team", "away_team", "home_score", "away_score", "winner_type"]],
              use_container_width=True)
+
+
+#Para poder ejecutarlo se debe correr el comando streamlit run app.py  en la consola de pycharm
