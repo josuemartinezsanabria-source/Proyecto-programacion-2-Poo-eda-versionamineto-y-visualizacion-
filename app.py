@@ -109,3 +109,4 @@ st.dataframe(df_f[["date", "home_team", "away_team", "home_score", "away_score",
 
 
 #Para poder ejecutarlo se debe correr el comando streamlit run app.py  en la consola de pycharm
+#si es necesario usar el comando pip install -r requirements.txt para instalar los requirements
